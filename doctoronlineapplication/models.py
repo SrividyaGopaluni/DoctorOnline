@@ -4,8 +4,6 @@ from django.contrib.auth.models import User, AbstractBaseUser, PermissionsMixin,
 from .utils import ROLES
 # Create your models here.
 
-
-
 class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(unique=True)
@@ -36,7 +34,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Service(models.Model):
     title = models.CharField(max_length=120)
-    description = models.TextField()
+    description = models.TextField(max_length=120, blank=True, null=True)
+    pricing = models.TextField(max_length=120, blank=True, null=True)
+    speciality = models.TextField(max_length=120, blank=True, null=True)
 
 
     def __str__(self):
@@ -48,6 +48,11 @@ class Doctor(models.Model):
     speciality = models.CharField(max_length=120)
     details = models.TextField()
     experience = models.TextField()
+    email = models.EmailField(max_length=100,blank=True,null=True)
+    gender = models.CharField(max_length=256, choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other'),
+                                                       ('prefer not to say', 'Prefer Not To Say')],
+                              default='Select a gender', blank=False)
+
     twitter = models.CharField(max_length=120, blank=True, null=True)
     facebook = models.CharField(max_length=120, blank=True, null=True)
     instagram = models.CharField(max_length=120, blank=True, null=True)
@@ -95,8 +100,8 @@ class Patient(models.Model):
     age = models.IntegerField(default = 18, blank=False)
     address = models.CharField(max_length=120)
     previous_medications =  models.CharField(max_length=120)
-    dateofbirth = models.DateTimeField(max_length=120)
-    date_created = models.CharField(null=True,max_length=20)
+    dateofbirth = models.DateField(max_length=120,blank=False)
+    date_created = models.DateTimeField(max_length=20,blank=False)
 
     def __str__(self):
         return self.first_name

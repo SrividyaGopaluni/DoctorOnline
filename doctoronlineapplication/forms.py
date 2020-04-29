@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import ModelForm
+
 from .models import User,Patient,Doctor,Service,Appointment
 
 
@@ -37,3 +39,48 @@ class SignUpForm(forms.Form):
         if password != self.data.get("confirm_password"):
             raise forms.ValidationError("Passwords do not match")
         return password
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
+class AppointmentForm(ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ('doctor', 'date', 'time', 'name',)
+        widgets = {
+            'date': DateInput(),
+        }
+
+
+
+
+class PatientAddForm(forms.ModelForm):
+    class Meta:
+        model = Patient
+        exclude = ()
+        widgets = {
+            'dateofbirth': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%d')
+                    }
+
+    def __init__(self, *args, **kwargs):
+        super(PatientAddForm, self).__init__(*args, **kwargs)
+        self.fields['dateofbirth'].widget = DateInput()
+
+class DoctorAddForm(forms.ModelForm):
+    class Meta:
+        model = Doctor
+        exclude = ()
+
+class DoctorForm(forms.ModelForm):
+    class Meta:
+        model = Doctor
+        exclude = ('details','speciality')
+
+
+class PatientForm(forms.ModelForm):
+    class Meta:
+        model = Patient
+        exclude = ()
+

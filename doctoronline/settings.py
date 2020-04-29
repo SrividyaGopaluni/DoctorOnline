@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'doctoronlineapplication.apps.DoctoronlineapplicationConfig',
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,6 +56,18 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'doctoronline.urls'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '7696950cee7e23'
+EMAIL_HOST_PASSWORD = 'e1183dec5f13b7'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+
+
 
 TEMPLATES = [
     {

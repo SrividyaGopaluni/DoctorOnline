@@ -1,0 +1,53 @@
+{% extends 'sma/base.html' %}
+{% load static %}
+{% block body_content %}
+ <style>
+        body {
+            background-color: lightskyblue;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body"><b>Here are the details about services offered and price details of those services</b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h2 style="padding-left: 20Px">List of Services</h2>
+    </div>
+    <div>
+        <table   class="table-bordered table-hover">
+            <thead>
+            <tr class="bg-info">
+                <th >Name of the Service</th>
+                <th >Description of the service</th>
+                <th >Pricing details</th>
+                <th >Sepciality offered</th>
+
+
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for price in pricing_details %}
+                <tr>
+
+
+                    <td >{{ price.title }}</td>
+                    <td>{{ price.description }}</td>
+                    <td>{{price.pricing}}</td>
+                    <td>{{price.speciality}}</td>
+
+
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+{% endblock body_content %}

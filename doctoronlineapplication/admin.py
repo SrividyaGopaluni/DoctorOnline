@@ -11,12 +11,13 @@ class AppoinmentAdmin(admin.ModelAdmin):
     search_fields = ['doctor', 'name', ]
 
 class DoctorAdmin(admin.ModelAdmin):
-    list_display = ['name','speciality','experience',]
+    list_display = ['name','speciality','experience','email',]
 
 class PatientAdmin(admin.ModelAdmin):
     list_display = ['first_name','last_name','gender','age','email']
 
-
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ['title','pricing','speciality']
 
 class UserList(admin.ModelAdmin):
     list_display = ( 'email','username','is_active','created_on','role','is_staff','is_patient')

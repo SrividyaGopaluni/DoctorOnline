@@ -3,42 +3,105 @@
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 {%block body_content%}
-<div class="text-center">
-    <h1>Welcome to Hospital Management system - Doctor Online</h1>
-    <img src="{% static "images/doctor.PNG" %}" alt="session" width="250" height="250"/>
-</div>
 
-<div>
-    {% if request.user.role == "staff" %}
-    <h2> Welcome Staff</h2>
-    {% endif %}
+    <div>
+        {% if not request.user.is_authenticated %}
+            <div class="text-center">
+                    <h1>Hospital Management system - Doctor Online </h1>
+            </div>
 
-    {% if request.user.role == "patient" %}
-    <h2> Welcome Patient, </h2>
-        <div class="page-container">
-            <p>Please choose from below options.</p>
-        </div>
-        <div class="content container">
-            <div class="row">
-                <div class="col-md-8">
+            <div class=".container" style="text-align: center;">
+                    <img src="{% static "images/doctor.png" %}" alt="session" width="250" height="250"/>
+            </div>
+        {% endif %}
 
-                        <div class="links">
-                            <!-- Example row of columns -->
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="thumbnail">
-                                        <img src="{% static "images/doctor.PNG" %}" alt="session" width="250" height="250"/>
-                                        <div class="caption">
-                                            <p><a class="btn btn-primary" href="{% url 'sma:session_list' %}" role="button">View Details</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+
+
+        <!--staff -->
+
+        {% if request.user.role == "staff" %}
+            <div class="jumbotron">
+                <div align="right">
+                    <button type="button" class="btn btn-outline-primary"><a href="{% url 'sma:view_bookings' %}"><b>View Bookings</b></a></button>
+                </div>
+
+                <h2>Welcome Staff, {{ request.user.username }}</h2>
+                <p class="lead"></p>
+                <div class="row">
+
+                    <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        <h5 class="card-title">Doctors</h5>
+                    </div>
+                    <img src="{% static "images/doctor.png" %}" height="200" class="card-img-top" alt="Sessions">
+                    <div class="card-body">
+
+                        <a href="{% url 'sma:view_doctors' user_type='doctor' %}" class="btn btn-primary">View Doctors</a>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        <h5 class="card-title">Patient</h5>
+                    </div>
+                    <img src="{% static "images/patient.png" %}" height="200" class="card-img-top" alt="Sessions">
+                    <div class="card-body">
+
+                        <a href="{% url 'sma:view_doctors' user_type='patient' %}" class="btn btn-primary">View Patients</a>
+                    </div>
+                </div>
+
+
+            </div>
+
+        {% endif %}
+
+
+        <!--patient -->
+
+        {% if request.user.role == "patient" %}
+            <div class="jumbotron">
+
+                <h2> Welcome Patient,{{request.user.username}} </h2>
+
+                <p class="lead">Please choose from below options.</p>
+                <div class="row">
+
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            <h5 class="card-title">View Doctor Details</h5>
                         </div>
+                        <img src="{% static "images/doctor.png" %}" height="200" class="card-img-top" alt="Sessions">
+
+                        <a href="{% url 'sma:doctor_details' %}" class="btn btn-primary">View Doctor Details</a>
 
                     </div>
+
+
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            <h5 class="card-title">Book Appointment</h5>
+                        </div>
+                        <img src="{% static "images/bookappointment.png" %}" height="200" class="card-img-top" alt="Sessions">
+
+                        <a href="{% url 'sma:new_appointment' %}" class="btn btn-primary">Book Here</a>
+
+                    </div>
+
+
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            <h5 class="card-title">Pricing Details </h5>
+                        </div>
+                        <img src="{% static "images/price.png" %}" height="200" class="card-img-top" alt="Sessions">
+
+                        <a href="{% url 'sma:pricing_details' %}" class="btn btn-primary">View Pricing Details</a>
+
+                    </div>
+
+                </div>
             </div>
-        </div>
-    {% endif %}
-</div>
+        {% endif %}
+    </div>
 {% endblock body_content%}

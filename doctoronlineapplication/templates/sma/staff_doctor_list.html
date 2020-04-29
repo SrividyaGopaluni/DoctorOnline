@@ -1,0 +1,122 @@
+{% extends 'sma/base.html' %}
+{% load static %}
+{% block body_content %}
+ <style>
+        body {
+            background-color: beige;
+        }
+ </style>
+
+
+    <div class="row" align="right">
+    {% ifequal user_type 'patient' %}
+            <a href="{% url 'sma:add_doctors_or_patient' user_type='patient' %}"  class="row"><span class="btn btn-primary">Add Patient</span></a>
+    {% endifequal %}
+
+        <br>
+    {% ifequal user_type 'doctor' %}
+            <a href="{% url 'sma:add_doctors_or_patient' user_type='doctor' %}"  class="row"><span class="btn btn-primary">Add Doctor</span></a>
+    {% endifequal %}
+
+
+
+
+
+    </div>
+
+    <h2 style="padding-left: 20Px">List of {{user_type}}s</h2>
+
+    <div>
+
+
+
+        <table   class="table-bordered table-hover">
+            <thead>
+            <tr class="bg-info">
+                <th >{{user_type}} Name</th>
+                <th >{{user_type}} Email</th>
+                <th >{{user_type}} Gender</th>
+                <th >{{user_type}} Details</th>
+
+                <th> Edit {{user_type}}</th>
+                <th> Delete {{user_type}}</th>
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for info in list_info %}
+                <tr>
+                    {% ifequal user_type 'patient'  %}
+                        <td >{{ info.last_name }}</td>
+                    {% endifequal %}
+                    {% ifequal user_type 'doctor' %}
+                        <td >{{ info.name }}</td>
+                    {% endifequal %}
+
+                    {% ifequal user_type 'patient'  %}
+                        <td >{{ info.email }}</td>
+                    {% endifequal %}
+                    {% ifequal user_type 'doctor' %}
+                        <td >{{ info.email }}</td>
+                    {% endifequal %}
+
+                    {% ifequal user_type 'patient'  %}
+                        <td >{{ info.gender }}</td>
+                    {% endifequal %}
+                    {% ifequal user_type 'doctor' %}
+                        <td >{{ info.gender }}</td>
+                    {% endifequal %}
+
+                    {% ifequal user_type 'patient'  %}
+                        <td >{{ info.address }}</td>
+                    {% endifequal %}
+                    {% ifequal user_type 'doctor' %}
+                        <td >{{ info.facebook }}</td>
+                    {% endifequal %}
+
+
+                    {% ifequal user_type 'patient'  %}
+                        <td ><a class="btn btn-success btn-large" href="{% url 'sma:edit_doctor_or_patient' user_type='patient' user_id=info.id  %}">Edit</a></td>
+                    {% endifequal %}
+                    {% ifequal user_type 'doctor' %}
+                        <td ><a class="btn btn-success btn-large" href="{% url 'sma:edit_doctor_or_patient' user_type='doctor' user_id=info.id %}">Edit</a></td>
+                    {% endifequal %}
+
+
+
+                    {% ifequal user_type 'patient'  %}
+                        <td ><a class="btn btn-danger btn-large" href="{% url 'sma:delete_doctor_or_patient' user_type='patient' user_id=info.id %}" onclick="return confirm('Are you sure you want to delete?')"
+                                class="btn btn-danger">Delete</a>
+
+                        </td>
+                    {% endifequal %}
+                    {% ifequal user_type 'doctor' %}
+                        <td ><a class="btn btn-danger btn-large" href="{% url 'sma:delete_doctor_or_patient' user_type='doctor' user_id=info.id %}" onclick="return confirm('Are you sure you want to delete?')"
+                                class="btn btn-danger">Delete</a></td>
+                    {% endifequal %}
+
+
+
+
+
+
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% ifequal user_type 'patient' %}
+        <a href="{% url 'sma:patient_summary_pdf' %}"  class="row"><span class="btn btn-primary">Download Report</span></a>
+    {% endifequal %}
+    {% ifequal user_type 'doctor' %}
+        <a href="{% url 'sma:doctor_summary_pdf' %}"  class="row"><span class="btn btn-primary">Download Report</span></a>
+    {% endifequal %}
+
+    </div>
+
+
+
+{% endblock body_content %}
